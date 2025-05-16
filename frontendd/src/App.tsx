@@ -1,13 +1,15 @@
 
 import './App.css'
-import Login from './pages/login/login'
+import PropsButton from './pages/login/logiin'
+
+
 
 function App() {
   
 
   return (
     <>
-      <Login></Login>
+      <PropsButton></PropsButton>
     </>
   )
 }
