@@ -21,6 +21,6 @@ const DesktopTodo:React.FC=()=>{
          <TodoInput isEditing={isEditing} handleChange={handleChange} handleSubmit={handleSubmit} description={description}></TodoInput>
         </>
     )
-}
+}   
 
 export default DesktopTodo
