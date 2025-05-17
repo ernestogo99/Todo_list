@@ -1,6 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Login:React.FC = () => {
+    const navigate=useNavigate()
+
 
     return(
     <div> 
@@ -15,7 +17,7 @@ const Login:React.FC = () => {
             <input type = "password" id = "user-password"/>
         </div>
         <div id = "login-actions">
-            <button type="submit"> Entrar </button>
+            <button type="submit" onClick={()=>navigate("/todolist")}> Entrar </button>
         </div>
     </form>
     <div id = "register-link">
