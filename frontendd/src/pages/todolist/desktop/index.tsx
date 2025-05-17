@@ -26,8 +26,8 @@ const DesktopTodo:React.FC=()=>{
     return(
         <>
          <TodoInput  handleChange={handleChange} handleSubmit={handleSubmit} description={description}></TodoInput>
-         <TodoItem item={item} key={item.id} onDelete={handleChange} onToggle={handleSubmit}></TodoItem>
-         <TodoItem item={item} key={item.id} onDelete={handleChange} onToggle={handleSubmit}></TodoItem>
+         <TodoItem item={item} key={item.id} onDelete={handleChange} handleDone={handleSubmit}  handleEdit={handleChange}  ></TodoItem>
+         <TodoItem item={item} key={item.id} onDelete={handleChange} handleDone={handleChange} handleEdit={handleChange}></TodoItem>
         </>
     )
 }   
