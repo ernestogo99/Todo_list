@@ -1,33 +1,39 @@
 import { LucideFileText } from "lucide-react";
+import styles from "./style.module.css";
+import { CustonButton } from "../customButton/custonbutton";
 
-interface ItodoInput{
-    description:string;
-    handleChange: ()=> void;
-    handleSubmit: ()=> void;
-    isEditing:boolean;
+interface TodoInputProps {
+  description: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: React.FormEvent) => void;
+
 }
 
-
-
-export const TodoInput:React.FC<ItodoInput>=({description,handleChange,handleSubmit,isEditing})=>{
-    return(
-        <div>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <div>
-                        <LucideFileText></LucideFileText>
-                    </div>
-                     <input type="text" value={description}  onChange={handleChange} placeholder="New todo"></input>
-                </div>
-
-                <button type="submit">
-                    {isEditing ? "Edit task": "Add new Task"}
-                </button>
-
-               
-            </form>
+export const TodoInput: React.FC<TodoInputProps> = ({
+  description,
+  handleChange,
+  handleSubmit,
+ 
+}) => {
+  return (
+    <div className={styles.card}>
+      <form onSubmit={handleSubmit}>
+        <div className={styles.inputGroup}>
+          <div className={styles.inputGroupPrepend}>
+            <div>
+              <LucideFileText  size={18} />
+            </div>
+          </div>
+          <input
+            type="text"
+            className={styles.input}
+            placeholder="New Todo"
+            value={description}
+            onChange={handleChange}
+          />
         </div>
-    )
-}
-
-
+        <CustonButton text="Add new todo" type="submit"></CustonButton>
+      </form>
+    </div>
+  );
+};
