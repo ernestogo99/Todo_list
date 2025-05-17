@@ -1,3 +1,5 @@
+
+/*todo input styles*/
 .card {
   border: 1px solid #ccc;
   max-width: 500px;
@@ -33,3 +35,34 @@
   padding: 0.6rem 1rem;
 }
 
+
+/*todo item styles*/
+
+
+.box{
+  margin-bottom: 15px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonBox{
+  display: flex;
+  gap: 10px;
+}
+
+.text {
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  color: #333;
+  word-break: break-word;
+}
+
+.text.done {
+  color: red;
+  text-decoration: line-through;
+  font-weight: bold;
+}

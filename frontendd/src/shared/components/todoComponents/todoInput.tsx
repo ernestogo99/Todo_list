@@ -32,7 +32,7 @@ export const TodoInput: React.FC<TodoInputProps> = ({
             onChange={handleChange}
           />
         </div>
-        <CustonButton text="Add new todo" type="submit"></CustonButton>
+        <CustonButton  type="submit">Add New todo </CustonButton>
       </form>
     </div>
   );
