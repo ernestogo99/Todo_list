@@ -2,8 +2,6 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 const Login:React.FC = () => {
     const navigate=useNavigate()
-
-
     return(
     <div> 
     <h1> Login do Usuário</h1>
