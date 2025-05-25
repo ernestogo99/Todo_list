@@ -1,9 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Container } from "../../shared/components";
 
 const Home:React.FC = () => {
     const navigate=useNavigate()
     return(
+        <Container> 
             <div> 
             <h1> To Do List </h1>
             <h2> Seja bem-vindo a sua lista de tarefas!</h2>
@@ -13,7 +15,8 @@ const Home:React.FC = () => {
             <div id = "register-button">
                 <button type="submit" onClick={()=>navigate("/register")}> Registro </button>
             </div>
-        </div>
+        </div></Container>
+           
     )
 
 }

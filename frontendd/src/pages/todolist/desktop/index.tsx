@@ -1,12 +1,18 @@
 import type React from "react";
-import { CustonButton, TodoInput, TodoList } from "../../../shared/components";
+import { Container, CustonButton, TodoInput, TodoList } from "../../../shared/components";
 
 import type { ItodoItem } from "../../../shared/interfaces/todoitem";
 import { useMemo, useState } from "react";
 import styles from "./style.module.css"
+import { DeleteMessage } from "../../../shared/components/deleteMessage/deleteMessage";
+import { useNavigate } from "react-router-dom";
+
 
 const DesktopTodo:React.FC=()=>{
     const[search,setSearch]=useState('')
+    const navigate=useNavigate()
+
+ 
 
 
     const items:ItodoItem[]=[{
@@ -46,7 +52,8 @@ const DesktopTodo:React.FC=()=>{
 
     return(
         <>
-        <div className={styles.container}>
+        <Container> 
+            <div className={styles.box}> 
             <TodoInput
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
@@ -60,12 +67,12 @@ const DesktopTodo:React.FC=()=>{
                 handleEdit={handleSubmit}
             />
             <div className={styles.buttonBox}>
-                <CustonButton type="button">Sair</CustonButton>
+                <CustonButton onClick={()=>navigate('/login')} type="button">Sair</CustonButton>
             </div>
-</div>
-
-        
-       
+            </div>     </Container>
+           
+     
+          <DeleteMessage showDeletemessage={false} handleDelete={handleChange} onClose={handleChange}></DeleteMessage>
         </>
     )
 }   

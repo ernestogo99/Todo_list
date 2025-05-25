@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Container } from "../../shared/components";
 
 const Register: React.FC = () => {
   return (
-    <div>
+    <Container>
+      <div>
       <h1>Registro</h1>
       <form id="user-register">
         <div id="user-name-container">
@@ -24,6 +26,9 @@ const Register: React.FC = () => {
         </p>
       </div>
     </div>
+
+    </Container>
+    
   );
 };
 

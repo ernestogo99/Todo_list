@@ -40,10 +40,13 @@
 
 .box{
   margin-bottom: 15px;
+  margin-top: 15px;
   padding: 4px;
   border: 1px solid #ccc;
   display: flex;
   justify-content: space-between;
+  width: 34.5rem;
+
 }
 
 .buttonBox{
