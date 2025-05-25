@@ -1,18 +1,39 @@
 import type React from "react";
-import { TodoInput } from "../../../shared/components";
-import { TodoItem } from "../../../shared/components/todoComponents/todoItem";
-import type { ItodoItem } from "../../../shared/interfaces/todoitem";
+import { CustonButton, TodoInput, TodoList } from "../../../shared/components";
 
+import type { ItodoItem } from "../../../shared/interfaces/todoitem";
+import { useMemo, useState } from "react";
+import styles from "./style.module.css"
 
 const DesktopTodo:React.FC=()=>{
-     
-    const item:ItodoItem={
+    const[search,setSearch]=useState('')
+
+
+    const items:ItodoItem[]=[{
         description:"compiladores",
         done:true,
         id:"oi"
-    }
+        },{
+        description:"teste",
+        done:false,
+        id:"ola"
+        },{
+            description:"compiladores",
+        done:true,
+        id:"oie"
+        },{
+            description:"compiladores",
+        done:true,
+        id:"oiee"
+        }]
 
     const description= "ola mundo"
+
+    const filteredItems = useMemo(() => {
+        return items.filter((item) =>
+            item.description.toLowerCase().includes(search.toLowerCase())
+        );
+}, [items, search]);
 
     const handleChange=()=>{
 
@@ -25,9 +46,26 @@ const DesktopTodo:React.FC=()=>{
 
     return(
         <>
-         <TodoInput  handleChange={handleChange} handleSubmit={handleSubmit} description={description}></TodoInput>
-         <TodoItem item={item} key={item.id} onDelete={handleChange} handleDone={handleSubmit}  handleEdit={handleChange}  ></TodoItem>
-         <TodoItem item={item} key={item.id} onDelete={handleChange} handleDone={handleChange} handleEdit={handleChange}></TodoItem>
+        <div className={styles.container}>
+            <TodoInput
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                description={description}
+            />
+            <TodoList
+                search={search}
+                setSearch={setSearch}
+                items={filteredItems}
+                handleDelete={handleSubmit}
+                handleEdit={handleSubmit}
+            />
+            <div className={styles.buttonBox}>
+                <CustonButton type="button">Sair</CustonButton>
+            </div>
+</div>
+
+        
+       
         </>
     )
 }   
