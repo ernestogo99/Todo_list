@@ -9,7 +9,7 @@ users_router = Router(tags=['User'])
 @users_router.post('/', response={200: dict, 400: dict, 500: dict})
 def create_user(request, user_schema: UserSchema):
     """Rota para criar um usuário."""
-    user = User(**user_schema.user.dict())
+    user = User(**user_schema.dict())
     user.password = make_password(user.password)
     try:
         user.full_clean()
