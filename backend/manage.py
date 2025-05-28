@@ -3,7 +3,7 @@
 import os
 import sys
 
-
+# eu recebi email aqui
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
