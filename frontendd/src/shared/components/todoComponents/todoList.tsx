@@ -6,14 +6,15 @@ import { Search } from "lucide-react";
 
 interface ItodoList{
     items:ItodoItem[]
-    handleDelete:(id:string)=>void;
-    handleEdit:(id:string)=>void;
+    handleOpenModal:(item:ItodoItem)=>void;
+    handleEdit:(todoItem:ItodoItem)=>void;
     search:string
     setSearch:(value:string)=>void
+    handleDone:(todo:ItodoItem)=>void
 }
 
 
-export const TodoList:React.FC<ItodoList>=({items,handleDelete,handleEdit,search,setSearch})=>{  
+export const TodoList:React.FC<ItodoList>=({items,handleOpenModal,handleEdit,search,setSearch,handleDone})=>{  
 
   
 
@@ -45,7 +46,8 @@ export const TodoList:React.FC<ItodoList>=({items,handleDelete,handleEdit,search
         key={item.id}
         item={item}
         handleEdit={handleEdit}
-        onDelete={handleDelete}
+        onOpenModal={handleOpenModal}
+        handleDone={handleDone}
     />
 ))}
 

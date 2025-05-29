@@ -1,5 +1,5 @@
 export interface ItodoItem{
-    id:string;
-    description:string;
+    id?:number;
+    descricao:string;
     done:boolean;
 }

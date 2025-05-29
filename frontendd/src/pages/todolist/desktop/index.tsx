@@ -2,79 +2,166 @@ import type React from "react";
 import { Container, CustonButton, TodoInput, TodoList } from "../../../shared/components";
 
 import type { ItodoItem } from "../../../shared/interfaces/todoitem";
-import { useMemo, useState } from "react";
-import styles from "./style.module.css"
+import { useEffect, useMemo, useState } from "react";
+import styles from "./style.module.css";
 import { DeleteMessage } from "../../../shared/components/deleteMessage/deleteMessage";
 import { useNavigate } from "react-router-dom";
+import { TodoService } from "../../../shared/services/todoservice";
+import toast from "react-hot-toast";
+import { authService } from "../../../shared/services/authservice";
+
+const DesktopTodo: React.FC = () => {
+  const [search, setSearch] = useState('');
+  const navigate = useNavigate();
+  const [todos, setTodos] = useState<ItodoItem[]>([]);
+  const [showDeleteMessage, setShowDeleteMessage] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState<ItodoItem | null>(null);
+  const [description, setDescription] = useState('');
 
 
-const DesktopTodo:React.FC=()=>{
-    const[search,setSearch]=useState('')
-    const navigate=useNavigate()
+  useEffect(() => {
+    TodoService.getAllTodosByUser().then((response) => {
+      if (response instanceof Error) {
+        toast.error(response.message);
+      } else {
+        setTodos(response);
+      }
+    });
+  }, []);
 
- 
+  const filteredItems = useMemo(() => {
+    return todos.filter((item) =>
+      item.descricao.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [todos, search]);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.target.value);
+  };
 
-    const items:ItodoItem[]=[{
-        description:"compiladores",
-        done:true,
-        id:"oi"
-        },{
-        description:"teste",
-        done:false,
-        id:"ola"
-        },{
-            description:"compiladores",
-        done:true,
-        id:"oie"
-        },{
-            description:"compiladores",
-        done:true,
-        id:"oiee"
-        }]
+  const handleDone = (todoItem: ItodoItem) => {
+    const updatedTodo = { ...todoItem, done: !todoItem.done };
 
-    const description= "ola mundo"
+    TodoService.editTodo(updatedTodo.id!, updatedTodo)
+      .then(response => {
+        if (response instanceof Error) {
+          toast.error("Erro ao atualizar tarefa.");
+          return;
+        }
 
-    const filteredItems = useMemo(() => {
-        return items.filter((item) =>
-            item.description.toLowerCase().includes(search.toLowerCase())
+        setTodos(prevTodos =>
+          prevTodos.map(item =>
+            item.id === updatedTodo.id ? updatedTodo : item
+          )
         );
-}, [items, search]);
+      })
+      .catch(() => {
+        toast.error("Erro ao atualizar tarefa.");
+      });
+  };
 
-    const handleChange=()=>{
+  const handleSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
 
+    if (!description.trim()) {
+      toast.error("Descrição não pode estar vazia");
+      return;
     }
 
+  
+    const newTodo: ItodoItem = {
+      descricao: description,
+      done: false,
+    };
 
-    const handleSubmit=()=>{
-
-    }
-
-    return(
-        <>
-        <Container> 
-            <div className={styles.box}> 
-            <TodoInput
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-                description={description}
-            />
-            <TodoList
-                search={search}
-                setSearch={setSearch}
-                items={filteredItems}
-                handleDelete={handleSubmit}
-                handleEdit={handleSubmit}
-            />
-            <div className={styles.buttonBox}>
-                <CustonButton onClick={()=>navigate('/login')} type="button">Sair</CustonButton>
-            </div>
-            </div>     </Container>
-           
+    TodoService.createTodo(newTodo)
+      .then(result => {
+        if (result instanceof Error) {
+          toast.error(result.message);
+        } else {
+          setTodos(prev => [...prev, result]);
+          setDescription('');
+          toast.success("Tarefa criada com sucesso!");
+        }
+      })
+      .catch(() => {
+        toast.error("Erro ao criar a tarefa");
+      })
      
-          <DeleteMessage showDeletemessage={false} handleDelete={handleChange} onClose={handleChange}></DeleteMessage>
-        </>
-    )
-}   
+  };
 
-export default DesktopTodo
+  const logOut = () => {
+  authService.logout(); 
+}
+
+  const handleOpenDeleteModal = (todo: ItodoItem) => {
+    setSelectedTodo(todo);
+    setShowDeleteMessage(true);
+  };
+
+
+  const handleCloseDeleteModal = () => {
+    setSelectedTodo(null);
+    setShowDeleteMessage(false);
+  };
+
+
+  const handleEdit = (todoItem: ItodoItem) => {
+  navigate(`/todolist/editar/${todoItem.id}`);
+    };
+
+
+  const handleDelete = () => {
+    if (!selectedTodo) return;
+
+    TodoService.deleteTodo(selectedTodo.id!)
+      .then(response => {
+        if (response instanceof Error) {
+          toast.error(response.message);
+        } else {
+          setTodos(prev => prev.filter(todo => todo.id !== selectedTodo.id));
+          toast.success("Tarefa excluída com sucesso!");
+        }
+        handleCloseDeleteModal();
+      })
+      .catch(() => {
+        toast.error("Erro ao excluir tarefa.");
+        handleCloseDeleteModal();
+      });
+  };
+
+  return (
+    <>
+      <Container>
+        <div className={styles.box}>
+          <TodoInput
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            description={description}
+          />
+          <TodoList
+            search={search}
+            setSearch={setSearch}
+            items={filteredItems}
+            handleOpenModal={handleOpenDeleteModal}  
+            handleEdit={handleEdit}
+            handleDone={handleDone}
+          />
+          <div className={styles.buttonBox}>
+            <CustonButton onClick={logOut} type="button">
+              Sair
+            </CustonButton>
+          </div>
+        </div>
+      </Container>
+
+      <DeleteMessage
+        showDeletemessage={showDeleteMessage}
+        handleDelete={handleDelete}
+        onClose={handleCloseDeleteModal}
+      />
+    </>
+  );
+};
+
+export default DesktopTodo;

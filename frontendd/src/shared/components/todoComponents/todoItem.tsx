@@ -4,26 +4,26 @@ import styles from "./style.module.css"
 
 interface ItodoItemprops{
     item:ItodoItem
-    onDelete:(id:string)=>void
-    handleDone?:(id:string)=>void
-    handleEdit:(id:string)=>void
+    onOpenModal:(item:ItodoItem)=>void
+    handleDone:(todoitem:ItodoItem)=>void
+    handleEdit:(todoitem:ItodoItem)=>void
 }
 
 
-export const TodoItem:React.FC<ItodoItemprops>=({item,onDelete,handleDone,handleEdit})=>{
+export const TodoItem:React.FC<ItodoItemprops>=({item,onOpenModal,handleDone,handleEdit})=>{
   
 
     return(
         <li className={styles.box}>
-            <h6 className={`${styles.text} ${item.done ? styles.done : ""}`}>{item.description}</h6>
+            <h6 className={`${styles.text} ${item.done ? styles.done : ""}`}>{item.descricao}</h6>
              <div className={styles.buttonBox} >
-                <button onClick={()=>handleDone!(item.id)}>
+                <button onClick={()=>handleDone!(item)}>
                     {item.done? <CheckSquare color="green"/> : <Square/>}
                 </button>
-                <button onClick={()=>handleEdit(item.id)}>
+                <button onClick={()=>handleEdit(item)}>
                     <Pen></Pen>
                 </button>
-                <button onClick={()=>onDelete(item.id)}>
+                <button onClick={()=>onOpenModal(item)}>
                     <Trash color="red"></Trash>
                 </button>
              </div>
