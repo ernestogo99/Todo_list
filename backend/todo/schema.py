@@ -13,3 +13,4 @@ class TaskCreateSchema(Schema):
 
 class TaskUpdateSchema(Schema):
     descricao: str
+    done:bool

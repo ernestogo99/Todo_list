@@ -41,8 +41,8 @@ def editar_tarefa(request, id_tarefa: int, data: TaskUpdateSchema):
     user=request.auth
     if not user or isinstance(user, AnonymousUser):
         return 401, {'status': 401, 'error': 'Usuário não autenticado'}
+    Tarefa.objects.filter(id=id_tarefa,user=user).update(**data.dict())
     tarefa = get_object_or_404(Tarefa, id=id_tarefa,user=user)
-    tarefa.descricao = data.descricao
     tarefa.save()
     return tarefa
 
