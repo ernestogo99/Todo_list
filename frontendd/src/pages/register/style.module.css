@@ -17,9 +17,8 @@
 .flex {
   display: flex;
   flex-direction: column;
-  gap: 1.0rem;
+  gap: 1.2rem;
   width: 100%;
-  
 }
 
 .label {
@@ -33,7 +32,6 @@
   border: 1px solid #ccc;
   font-size: 1rem;
   width: 100%;
-
 }
 
 .input:disabled {

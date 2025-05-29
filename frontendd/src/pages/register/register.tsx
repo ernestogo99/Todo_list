@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Container } from "../../shared/components";
-
+import { Container, CustonButton } from "../../shared/components";
 import toast from "react-hot-toast";
 import { authService } from "../../shared/services/authservice";
+import styles from "./style.module.css";
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -36,33 +36,40 @@ const Register: React.FC = () => {
 
   return (
     <Container>
-      <div>
-        <h1>Registro</h1>
-        <form id="user-register" onSubmit={handleSubmit}>
-          <div id="user-name-container">
-            <label htmlFor="user-name">Usuário:</label>
+      <div className={styles.box}>
+        <h1 className={styles.title}>Registro</h1>
+        <form id="user-register" onSubmit={handleSubmit} className={styles.flex}>
+          <div>
+            <label htmlFor="user-name" className={styles.label}>Usuário:</label>
             <input
               type="text"
               id="user-name"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              className={styles.input}
+              required
             />
           </div>
-          <div id="user-password-container">
-            <label htmlFor="user-password">Senha:</label>
+
+          <div>
+            <label htmlFor="user-password" className={styles.label}>Senha:</label>
             <input
               type="password"
               id="user-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className={styles.input}
+              required
             />
           </div>
-          <div id="register-actions">
-            <button type="submit">Criar conta</button>
-          </div>
+
+          <CustonButton type="submit" >
+            Criar conta
+          </CustonButton>
         </form>
-        <div id="login-link">
-          <p id="text">
+
+        <div className={styles.linkText}>
+          <p>
             Já possui conta? <Link to="/login">Faça seu login</Link>
           </p>
         </div>

@@ -13,28 +13,27 @@
 
 ```
 /my-react-app
-│── /public
 │
-│── /src
-│   ├── /assets         # Imagens, ícones, estilos globais, fontes etc.
-│   ├── /pages          # Páginas principais da aplicação
-│   ├── /routes         # Configuração das rotas da aplicação
-│   ├── /shared         # Recursos compartilhados
-│   │   ├── /components # Componentes reutilizáveis (botões, tabelas, inputs, etc.)
-│   │   ├── /contexts   # Contextos do React (Context API)
+├── /public
+│
+├── /src
+│   ├── /assets            # Imagens, ícones, estilos globais, fontes etc.
+│   ├── /pages             # Páginas principais da aplicação
+│   ├── /routes            # Configuração das rotas da aplicação
+│   ├── /shared            # Recursos compartilhados
+│   │   ├── /components    # Componentes reutilizáveis (botões, tabelas, inputs etc.)
+│   │   ├── /hooks         # Hooks customizados React
+│   │   ├── /interfaces    # Tipagens e interfaces TypeScript
+│   │   ├── /services      # Serviços para comunicação com APIs, requisições HTTP etc.
 │   │
-│   │   ├── /interfaces # Tipagens e interfaces TypeScript
-│   │   ├── /layout     # Layouts padrão (ex: com menu lateral, cabeçalho etc.)
-│   │   ├── /services   # Serviços de API, requisições HTTP etc.
-│   │   ├── /themes     # Temas e estilos personalizados (ex: MUI Theme)
+│   ├── App.tsx            # Componente principal da aplicação
+│   ├── main.tsx           # Ponto de entrada do React
+│   ├── vite.config.ts     # Configuração do Vite (caso use Vite)
 │
-│   ├── App.tsx         # Componente principal da aplicação
-│   ├── main.tsx        # Ponto de entrada do React
-│   ├── vite.config.ts  # Configuração do Vite (se estiver usando Vite)
-│
-│── package.json
-│── tsconfig.json       # Configuração do TypeScript
-│── .eslintrc.js        # Configuração do ESLint
-│── .gitignore
+├── package.json
+├── tsconfig.json          # Configuração do TypeScript
+├── .eslintrc.js           # Configuração do ESLint
+├── .gitignore
+
 
 ```
