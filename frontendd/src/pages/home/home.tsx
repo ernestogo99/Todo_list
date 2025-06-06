@@ -13,7 +13,8 @@ const Home:React.FC = () => {
                  <CustonButton type="submit" onClick={()=>navigate("/login")}> Login </CustonButton>
                 <CustonButton type="submit" onClick={()=>navigate("/register")}> Registro </CustonButton>
             </div>
-        </div></Container>
+        </div>
+        </Container>
            
     )
 

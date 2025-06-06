@@ -17,7 +17,7 @@ export const useViewPort=()=>{
     return{
         width,
         height,
-        ismobile: width<600,
+        isMobile: width<600,
         isTablet: width<1000 && width>600
     }
 }

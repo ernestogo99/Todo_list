@@ -10,7 +10,7 @@ import { TodoService } from "../../../shared/services/todoservice";
 import toast from "react-hot-toast";
 import { authService } from "../../../shared/services/authservice";
 
-const DesktopTodo: React.FC = () => {
+const MobileTodo: React.FC = () => {
   const [search, setSearch] = useState('');
   const navigate = useNavigate();
   const [todos, setTodos] = useState<ItodoItem[]>([]);
@@ -192,4 +192,4 @@ const DesktopTodo: React.FC = () => {
   );
 };
 
-export default DesktopTodo;
+export default MobileTodo;

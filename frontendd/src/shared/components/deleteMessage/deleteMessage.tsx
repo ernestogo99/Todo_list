@@ -13,7 +13,7 @@ export const DeleteMessage: React.FC<IDeleteMessage> = ({ handleDelete, onClose,
         {showDeletemessage && (
         <div className={styles.container}>
             <div className={styles.confirmBox}>
-            <h2 className={styles.title}>Tem certeza que deseja excluir este item?</h2>
+            <h2 className={styles.title}>Tem certeza que deseja realizar esta ação?</h2>
             <div className={styles.buttonGroup}>
                 <button onClick={handleDelete} className={styles.deleteButton}>Excluir</button>
                 <button onClick={onClose} className={styles.cancelButton}>Cancelar</button>

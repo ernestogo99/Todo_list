@@ -67,6 +67,18 @@ const deleteTodo=async(id:number):Promise<any>=>{
   }
 }
 
+const deleteDoneTodos=async():Promise<any>=>{
+  try{
+    const {data}=await api.delete("todo/delete_done_todos/")
+    return data
+  }catch (error: any) {
+    console.error(error);
+    const errorMessage =
+      error.response?.data?.error || "Erro ao excluir a todo";
+    return new Error(errorMessage);
+  }
+}
+
 
 const getTodoById=async(id:number):Promise<ItodoItem | Error>=>{
     try{
@@ -104,5 +116,6 @@ export const TodoService={
     getAllTodosByUser,
     createTodo,
     deleteTodo,
-    getAllTodos
+    getAllTodos,
+    deleteDoneTodos
 }

@@ -2,9 +2,9 @@ import  React from "react";
 import  { Routes, Route } from "react-router-dom";
 import Login from "../pages/login/login";
 import Register from "../pages/register/register";
-import DesktopTodo from "../pages/todolist/desktop";
 import Home from "../pages/home/home";
 import EditTodoPage from "../pages/editTodo/edit";
+import TodoList from "../pages/todolist";
 
 const AppRoutes:React.FC=()=>{
     return(
@@ -12,7 +12,7 @@ const AppRoutes:React.FC=()=>{
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/todolist" element={<DesktopTodo/>} />
+        <Route path="/todolist" element={<TodoList/>} />
         <Route path="/todolist/editar/:id" element={<EditTodoPage/>}></Route>
       </Routes>
     )
