@@ -1,4 +1,4 @@
-import {  CheckSquare, Pen, Square, Trash } from "lucide-react"
+import {  CheckSquare, Pen, Square, Trash,Eye } from "lucide-react"
 import type { ItodoItem } from "../../interfaces/todoitem"
 import styles from "./style.module.css"
 
@@ -7,10 +7,11 @@ interface ItodoItemprops{
     onOpenModal:(item:ItodoItem)=>void
     handleDone:(todoitem:ItodoItem)=>void
     handleEdit:(todoitem:ItodoItem)=>void
+    handleSeeItem:(todoitem:ItodoItem)=>void
 }
 
 
-export const TodoItem:React.FC<ItodoItemprops>=({item,onOpenModal,handleDone,handleEdit})=>{
+export const TodoItem:React.FC<ItodoItemprops>=({item,onOpenModal,handleDone,handleEdit,handleSeeItem})=>{
   
 
     return(
@@ -25,6 +26,9 @@ export const TodoItem:React.FC<ItodoItemprops>=({item,onOpenModal,handleDone,han
                 </button>
                 <button onClick={()=>onOpenModal(item)}>
                     <Trash color="red"></Trash>
+                </button>
+                 <button onClick={()=>handleSeeItem(item)}>
+                    <Eye color="blue"></Eye>
                 </button>
              </div>
         </li>

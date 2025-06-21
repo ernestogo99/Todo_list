@@ -3,11 +3,23 @@
 .card {
   border: 1px solid #ccc;
   max-width: 500px;
-  padding: 2rem;
+  padding: 2rem;  
   border-radius: 8px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
   background-color: white;
 }
+
+@media(max-width:599px){
+  .card{
+    max-width: 20rem;
+    margin-left: 8rem;
+    margin-top: 10px;
+  }
+  .todoListText{
+    margin-left: 8rem;
+  }
+}
+
 
 .inputGroup {
   display: flex;
@@ -47,6 +59,14 @@
   justify-content: space-between;
   width: 34.5rem;
 
+}
+
+
+@media(max-width:599px){
+  .box{
+    width: 23rem;
+    margin-left: 8rem;
+  }
 }
 
 .buttonBox{

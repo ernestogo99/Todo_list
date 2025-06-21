@@ -19,6 +19,16 @@ const getAllTodosByUser=async ():Promise<ItodoItem[]|Error>=>{
 }
 
 
+ const finishTodo= async (id: number, item:ItodoItem): Promise<ItodoItem | Error>=> {
+  try {
+    const { data } = await api.put(`todo/finish_todo/${id}`, item);
+    return data;
+  } catch (error: any) {
+    return new Error(error?.response?.data?.error || "Erro ao finalizar tarefa.");
+  }
+}
+
+
 const getAllTodos=async ():Promise<ItodoItem[]|Error>=>{
     try{
         const {data}= await api.get("todo/")
@@ -117,5 +127,6 @@ export const TodoService={
     createTodo,
     deleteTodo,
     getAllTodos,
-    deleteDoneTodos
+    deleteDoneTodos,
+    finishTodo
 }

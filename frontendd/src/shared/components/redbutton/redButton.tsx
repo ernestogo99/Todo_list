@@ -7,7 +7,7 @@ interface Ibutton{
     onClick?:()=>void
 }
 
-export const CustonButton:React.FC<Ibutton>=({children,type,onClick})=>{
+export const RedButton:React.FC<Ibutton>=({children,type,onClick})=>{
     return(
         <button type={type}   onClick={onClick} className={styles.custonButton}>{children}</button>
     )

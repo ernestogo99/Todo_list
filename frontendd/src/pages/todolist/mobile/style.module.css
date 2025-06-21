@@ -1,7 +1,6 @@
 
 
 .box{
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,11 +8,19 @@
   width: 40rem;
   height: 40rem;
   padding: 10px;
- 
 }
 
 .buttonBox {
   width: 32rem;
   display: flex;
   gap: 20px;
+}
+
+
+@media (max-width: 599px) {
+  .buttonBox {
+    gap: 18px;
+    width: 20rem;
+    margin-left: 8rem;
+  }
 }

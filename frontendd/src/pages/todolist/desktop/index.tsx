@@ -1,164 +1,32 @@
 import type React from "react";
-import { Container, CustonButton, TodoInput, TodoList } from "../../../shared/components";
+import { Container, RedButton, TodoInput, TodoList } from "../../../shared/components";
 
-import type { ItodoItem } from "../../../shared/interfaces/todoitem";
-import { useCallback, useEffect, useMemo, useState } from "react";
+
 import styles from "./style.module.css";
 import { DeleteMessage } from "../../../shared/components/deleteMessage/deleteMessage";
-import { useNavigate } from "react-router-dom";
-import { TodoService } from "../../../shared/services/todoservice";
-import toast from "react-hot-toast";
-import { authService } from "../../../shared/services/authservice";
+import { useTodoLogic } from "../../../shared/hooks/useTodoLogic";
+import { ItemDialog } from "../../../shared/components/itemDialog/itemDialog";
+
 
 const DesktopTodo: React.FC = () => {
-  const [search, setSearch] = useState('');
-  const navigate = useNavigate();
-  const [todos, setTodos] = useState<ItodoItem[]>([]);
-  const [showDeleteMessage, setShowDeleteMessage] = useState(false);
-  const[showDeleteAllMessage,setShowDeletAllMessage]=useState(false)
-  const [selectedTodo, setSelectedTodo] = useState<ItodoItem | null>(null);
-  const [description, setDescription] = useState('');
-
-
-  useEffect(() => {
-    TodoService.getAllTodosByUser().then((response) => {
-      if (response instanceof Error) {
-        toast.error(response.message);
-      } else {
-        setTodos(response);
-      }
-    });
-  }, []);
-
-  const filteredItems = useMemo(() => {
-    return todos.filter((item) =>
-      item.descricao.toLowerCase().includes(search.toLowerCase())
-    );
-  }, [todos, search]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value);
-  };
-
-  const handleDone = (todoItem: ItodoItem) => {
-    const updatedTodo = { ...todoItem, done: !todoItem.done };
-
-    TodoService.editTodo(updatedTodo.id!, updatedTodo)
-      .then(response => {
-        if (response instanceof Error) {
-          toast.error("Erro ao atualizar tarefa.");
-          return;
-        }
-
-        setTodos(prevTodos =>
-          prevTodos.map(item =>
-            item.id === updatedTodo.id ? updatedTodo : item
-          )
-        );
-      })
-      .catch(() => {
-        toast.error("Erro ao atualizar tarefa.");
-      });
-  };
-
-  const handleSubmit = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-
-    if (!description.trim()) {
-      toast.error("Descrição não pode estar vazia");
-      return;
-    }
-
-  
-    const newTodo: ItodoItem = {
-      descricao: description,
-      done: false,
-    };
-
-    TodoService.createTodo(newTodo)
-      .then(result => {
-        if (result instanceof Error) {
-          toast.error(result.message);
-        } else {
-          setTodos(prev => [...prev, result]);
-          setDescription('');
-          toast.success("Tarefa criada com sucesso!");
-        }
-      })
-      .catch(() => {
-        toast.error("Erro ao criar a tarefa");
-      })
-     
-  };
-
-  const logOut = () => {
-  authService.logout(); 
-}
-
-  const handleOpenDeleteModal = (todo: ItodoItem) => {
-    setSelectedTodo(todo);
-    setShowDeleteMessage(true);
-  };
-
-  const handleOpenDeleteAllModal=()=>[
-    setShowDeletAllMessage(true)
-  ]
-
-  const handleCloseDeleteAllModal=()=>{
-    setShowDeletAllMessage(false)
-  }
-  const handleCloseDeleteModal = () => {
-    setSelectedTodo(null);
-    setShowDeleteMessage(false);
-  };
-
-
-  const handleEdit = (todoItem: ItodoItem) => {
-  navigate(`/todolist/editar/${todoItem.id}`);
-    };
-
-
-  const handleDelete = () => {
-    if (!selectedTodo) return;
-
-    TodoService.deleteTodo(selectedTodo.id!)
-      .then(response => {
-        if (response instanceof Error) {
-          toast.error(response.message);
-        } else {
-          setTodos(prev => prev.filter(todo => todo.id !== selectedTodo.id));
-          toast.success("Tarefa excluída com sucesso!");
-        }
-        handleCloseDeleteModal();
-      })
-      .catch(() => {
-        toast.error("Erro ao excluir tarefa.");
-        handleCloseDeleteModal();
-      });
-  };
-
-  const handleDeleteDoneTodos=useCallback(()=>{
-      TodoService.deleteDoneTodos().then((response)=>{
-        if(response instanceof Error ){
-          toast.error(response.message)
-        }else{
-          setTodos(prev=>prev.filter((todo)=>!todo.done))
-          toast.success("Tarefas removidas com sucesso")
-        }
-        handleCloseDeleteAllModal()
-      })
-  },[])
+ const {handleChange,handleSubmit,description,search,setSearch,filteredItems,handleOpenDeleteModal
+  ,handleEdit,handleDone,logOut,handleOpenDeleteAllModal,showDeleteMessage,showDeleteAllMessage,
+  handleDelete,handleDeleteDoneTodos,handleCloseDeleteAllModal,handleCloseDeleteModal,selectedTodo,
+  openItemDialog,closeItemDialog,showDialog
+ }=useTodoLogic()
 
   return (
     <>
       <Container>
         <div className={styles.box}>
           <TodoInput
+        
             handleChange={handleChange}
             handleSubmit={handleSubmit}
             description={description}
           />
           <TodoList
+            handleSeeItem={openItemDialog}
             search={search}
             setSearch={setSearch}
             items={filteredItems}
@@ -167,12 +35,12 @@ const DesktopTodo: React.FC = () => {
             handleDone={handleDone}
           />
           <div className={styles.buttonBox}>
-            <CustonButton onClick={logOut} type="button">
+            <RedButton onClick={logOut} type="button">
               Logout
-            </CustonButton>
-            <CustonButton onClick={handleOpenDeleteAllModal} type="button">
+            </RedButton>
+            <RedButton onClick={handleOpenDeleteAllModal} type="button">
               Delete Done Tasks
-            </CustonButton>
+            </RedButton>
           </div>
         </div>
       </Container>
@@ -188,6 +56,14 @@ const DesktopTodo: React.FC = () => {
         handleDelete={handleDeleteDoneTodos}
         onClose={handleCloseDeleteAllModal}
       />
+
+      <ItemDialog
+      Item={selectedTodo!}     
+      showDialog={showDialog}
+      Onclose={closeItemDialog} 
+      >
+
+      </ItemDialog>
     </>
   );
 };

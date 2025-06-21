@@ -11,10 +11,11 @@ interface ItodoList{
     search:string
     setSearch:(value:string)=>void
     handleDone:(todo:ItodoItem)=>void
+    handleSeeItem:(item:ItodoItem)=>void
 }
 
 
-export const TodoList:React.FC<ItodoList>=({items,handleOpenModal,handleEdit,search,setSearch,handleDone})=>{  
+export const TodoList:React.FC<ItodoList>=({items,handleSeeItem,handleOpenModal,handleEdit,search,setSearch,handleDone})=>{  
 
   
 
@@ -48,6 +49,7 @@ export const TodoList:React.FC<ItodoList>=({items,handleOpenModal,handleEdit,sea
         handleEdit={handleEdit}
         onOpenModal={handleOpenModal}
         handleDone={handleDone}
+        handleSeeItem={handleSeeItem}
     />
 ))}
 

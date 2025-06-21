@@ -14,3 +14,8 @@ class TaskCreateSchema(Schema):
 class TaskUpdateSchema(Schema):
     descricao: str
     done:bool
+
+class TaskFinishSchema(ModelSchema):
+    class Meta:
+        model=Tarefa
+        fields=['done','finished']
