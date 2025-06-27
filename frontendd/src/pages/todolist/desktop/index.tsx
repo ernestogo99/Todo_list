@@ -58,6 +58,7 @@ const DesktopTodo: React.FC = () => {
       />
 
       <ItemDialog
+      key={selectedTodo?.id}
       Item={selectedTodo!}     
       showDialog={showDialog}
       Onclose={closeItemDialog} 

@@ -26,6 +26,26 @@ def criar_tarefa(request, data: TaskCreateSchema,):
     tarefa = Tarefa.objects.create(**data.dict(),user=user)
     return tarefa
 
+@router.put('/finish_todo/{id}',response={200:TaskFinishSchema,401:dict},auth=auth)
+def finish_todo(request,id,finished_todo:TaskFinishSchema):
+    user = request.auth
+    if not user or isinstance(user, AnonymousUser):
+        return 401, {'status': 401, 'error': 'Usuário não autenticado'}
+    
+
+   
+
+    todo=get_object_or_404(Tarefa,id=id,user=user)
+    todo.done=finished_todo.done
+    if(finished_todo.done):
+        todo.finished=datetime.now().date()
+    else:
+        todo.finished=None
+    todo.save()
+        
+
+    return todo
+
 @router.get("/{id_tarefa}", response={200:TaskSchema,401:dict},auth=auth)
 def ver_tarefa(request, id_tarefa: int):
     """Rota para obter uma tarefa por id"""
@@ -85,22 +105,3 @@ def delete_done_todos(request):
 
 
 
-@router.put('/fisish_todo/{id}',response={200:TaskFinishSchema,401:dict},auth=auth)
-def finish_todo(request,id,finished_todo:TaskFinishSchema):
-    user = request.auth
-    if not user or isinstance(user, AnonymousUser):
-        return 401, {'status': 401, 'error': 'Usuário não autenticado'}
-    
-
-   
-
-    todo=get_object_or_404(Tarefa,id=id,user=user)
-    todo.done=finished_todo.done
-    if(finished_todo.done):
-        todo.finished=datetime.now
-    else:
-        todo.finished=None
-    todo.save()
-        
-
-    return todo

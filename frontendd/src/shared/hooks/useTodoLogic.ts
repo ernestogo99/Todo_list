@@ -40,18 +40,23 @@ export const useTodoLogic=()=>{
   const handleDone = (todoItem: ItodoItem) => {
     const updatedTodo = { ...todoItem, done: !todoItem.done };
 
-    TodoService.editTodo(updatedTodo.id!, updatedTodo)
+    TodoService.finishTodo(updatedTodo.id!, updatedTodo)
       .then(response => {
         if (response instanceof Error) {
           toast.error("Erro ao atualizar tarefa.");
           return;
         }
 
+        console.log(response)
         setTodos(prevTodos =>
           prevTodos.map(item =>
-            item.id === updatedTodo.id ? updatedTodo : item
+            item.id === updatedTodo.id ? updatedTodo: item
           )
         );
+
+
+        setSelectedTodo(response);
+      
       })
       .catch(() => {
         toast.error("Erro ao atualizar tarefa.");

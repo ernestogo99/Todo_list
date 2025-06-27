@@ -9,6 +9,7 @@ interface IitemDialog {
 }
 
 export const ItemDialog: React.FC<IitemDialog> = ({ Item, showDialog, Onclose }) => {
+  console.log("ItemDialog renderizou com:", Item);
   if (!showDialog) return null;
 
   return (
@@ -20,6 +21,7 @@ export const ItemDialog: React.FC<IitemDialog> = ({ Item, showDialog, Onclose })
 
        <p><strong>Data de criação:</strong> {Item.create ? format(new Date(Item.create), "dd/MM/yyyy") : "Não informada"}</p>
         <p><strong>Descrição:</strong> {Item.descricao}</p>
+        <p><strong>Status:</strong> {Item.done ? "Concluído" : "Pendente"}</p>
         {Item.finished && (
         <p><strong>Data de conclusão:</strong> {format(new Date(Item.finished), "dd/MM/yyyy")}</p>
         )}
